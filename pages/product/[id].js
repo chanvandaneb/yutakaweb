@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 
 
 export default function ProductPage({product}) {
+    
     return(
         <>
         <Header/>
@@ -36,7 +37,7 @@ export default function ProductPage({product}) {
                         <span class="font-bold text-5xl leading-none align-baseline">{product.price}</span>
                     </div>
                     <div class="inline-block align-bottom">
-                        <FlyingButton main _id={product.id} src={product.images?.[0]}>
+                        <FlyingButton main  _id={product?._id} src={product?.images?.[0]}>
                                 <CartIcon/>Add to cart
                         </FlyingButton>
                     </div>
@@ -57,11 +58,7 @@ export default function ProductPage({product}) {
     <ProductReviews product={product}/>
 
     </Center>
-    <Footer/>
-
-
-           
-                
+    <Footer/>     
 
         </>
     );

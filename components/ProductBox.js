@@ -47,7 +47,7 @@ const WishlistButton = styled.button`
 `;
 
 
-export default function Test({_id,title,description,price,stock,images,wished=false, onRemoveFromWishlist =()=>{},}) {
+export default function ProductBox({_id,title,description,price,stock,images,wished=false, onRemoveFromWishlist =()=>{},}) {
   const url = '/product/'+_id;
   const [isWished,setIsWished] = useState(wished);
   function addToWishlist(ev) {
@@ -107,7 +107,7 @@ export default function Test({_id,title,description,price,stock,images,wished=fa
             <div class="flex items-center justify-between -mt-2">
               <span class="text-lg font-bold text-gray-900 dark:text-white">${price}</span>
               
-              <FlyingButton class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300" _id={_id} src={images?.[0]} _id={_id} src={images?.[0]}><MdAddShoppingCart/></FlyingButton>
+              <FlyingButton class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300" _id={_id} src={images?.[0]} ><MdAddShoppingCart/></FlyingButton>
               
             </div>
 
