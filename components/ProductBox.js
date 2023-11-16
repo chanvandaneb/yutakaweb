@@ -1,15 +1,17 @@
 
 import React from 'react'
 import Link from "next/link";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import FlyingButton from "@/components/FlyingButton";
-import HeartOutlineIcon from "@/components/icons/HeartOutlineIcon";
-import HeartSolidIcon from "@/components/icons/HeartSolidIcon";
+
 import axios from "axios";
 import { MdAddShoppingCart } from 'react-icons/Md';
 import styled from 'styled-components';
 import { IoHeartCircleSharp } from "react-icons/io5";
 import { IoHeartCircleOutline } from "react-icons/io5";
+
+
+
 
 const BigImage = styled.img`
     margin: 0 auto;
@@ -47,9 +49,14 @@ const WishlistButton = styled.button`
 `;
 
 
+
 export default function ProductBox({_id,title,description,price,stock,images,wished=false, onRemoveFromWishlist =()=>{},}) {
+
+
+  
   const url = '/product/'+_id;
   const [isWished,setIsWished] = useState(wished);
+
   function addToWishlist(ev) {
       ev.preventDefault();
       ev.stopPropagation();
@@ -62,16 +69,16 @@ export default function ProductBox({_id,title,description,price,stock,images,wis
       }).then(() => {});
       setIsWished(nextValue);
   }
+  
+
   return (
 
 
     <div class="max-w-2xl mx-auto h-100">
     
     
-      <div class="relative bg-white shadow-sm rounded-lg max-w-sm hover:shadow-2xl duration-500">
+      <div class="relative border hover:border-1 hover:border-blue-500 bg-white shadow-sm rounded-lg max-w-sm hover:shadow-2xl duration-500">
         <Link href={url}>
-
-
 
 
 
@@ -101,7 +108,7 @@ export default function ProductBox({_id,title,description,price,stock,images,wis
                 </path>
               </svg>
 
-              <span class=" text-yellow-400 text-xs font-sm ml-1">5.0</span>
+              <span class=" text-yellow-400 text-xs font-sm ml-1">2.5</span>
               <span class=" text-gray-500 text-xs font-sm ml-2 ">( {stock} In Stock )</span>
             </div>
             <div class="flex items-center justify-between -mt-2">

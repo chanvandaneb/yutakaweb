@@ -1,8 +1,8 @@
-import React from 'react'
-import Center from './Center'
-import styled from 'styled-components';
-
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Center from "./Center";
+import styled from "styled-components";
+import Link from "next/link";
 
 const Title = styled.h2`
   font-size: 2rem;
@@ -10,37 +10,50 @@ const Title = styled.h2`
   font-weight: normal;
 `;
 
+const Image = styled.img`
+  margin: 0 auto;
+  height: 200px;
+  width: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+`;
+
 export default function CategoriesPage() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get("/api/images");
+        setImages(response.data);
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    fetchImages();
+  }, []);
+
   return (
     <div>
-     <Center>
-     <Title>Categories</Title>
-      <div class="">
-        <ul class="-m-3.5 flex ">
-          <li class="m-3.5 h-52 w-52 bg-white rounded-xl flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
-            <img class="max-h-20" src="https://i.ibb.co/Smq7sZK/2021-11-07-13h26-50.png" alt="" />
-            <span class="font-semibold">Fruits & Vegetables</span>
-          </li>
-          <li class="m-3.5 h-52 w-52 bg-white rounded-xl flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
-            <img class="max-h-20" src="https://i.ibb.co/PwYJkQs/2021-11-07-13h39-41.png" alt="" />
-            <span class="font-semibold">Breads & Sweets</span>
-          </li>
-          <li class="m-3.5 h-52 w-52 bg-white rounded-xl flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
-            <img class="max-h-20" src="https://i.ibb.co/Hx3vbFx/2021-11-07-13h39-52.png" alt="" />
-            <span class="font-semibold">Frozen Seafoods</span>
-          </li>
-          <li class="m-3.5 h-52 w-52 bg-white rounded-xl flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
-            <img class="max-h-20" src="https://i.ibb.co/4PCjhsS/2021-11-07-13h40-02.png" alt="" />
-            <span class="font-semibold">Raw Meats</span>
-          </li>
-          <li class="m-3.5 h-52 w-52 bg-white rounded-xl flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
-            <img class="max-h-20" src="https://i.ibb.co/4PCjhsS/2021-11-07-13h40-02.png" alt="" />
-            <span class="font-semibold">Raw Meats</span>
-          </li>
-        </ul>
-      </div>
+      <Center>
+        <Title>Categories</Title>
+        <div className="">
+          <ul className="flex">
+            {images.map((image, i) => (
+              // eslint-disable-next-line react/jsx-key
+              <Link href={"/category/" + image._id}>
+                <li className="m-2 p-2 border hover:border-1 hover:border-blue-500 bg-white rounded-xl  flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
+                  <Image src={image.images} alt="" />
+                  <span class="font-semibold my-3 text-gray-600 ">
+                    {image.name}
+                  </span>
+                </li>
+              </Link>
+            ))}
+          </ul>
+        </div>
       </Center>
-
     </div>
-  )
+  );
 }

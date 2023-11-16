@@ -10,6 +10,7 @@ import Input from "@/components/Input";
 import {RevealWrapper} from "next-reveal";
 import {useSession} from "next-auth/react";
 import Footer from "@/components/Footer";
+import Swal from "sweetalert2";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -101,12 +102,14 @@ export default function CartPage() {
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
     const [city,setCity] = useState('');
-    const [postalCode,setPostalCode] = useState('');
     const [streetAddress,setStreetAddress] = useState('');
     const [province,setProvince] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [isSuccess,setIsSuccess] = useState(false);
     const [shippingFee, setShippingFee] = useState([]);
+    const [vatFee, setVatFee] = useState([]);
+    const [coupon, setCoupon] = useState([]);
+    
     useEffect(() => {
         if (cartProducts.length > 0) {
             axios.post('/api/cart', {ids:cartProducts})
@@ -127,6 +130,9 @@ export default function CartPage() {
         }
         axios.get('/api/settings?name=shippingFee').then(res => {
             setShippingFee(res.data.value);
+        })
+        axios.get('/api/settings?name=vatFee').then(res => {
+            setVatFee(res.data.value);
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -156,7 +162,8 @@ export default function CartPage() {
         });
 
         if (response.data === "Out of Stock"){
-            alert('ក្នុងស្ដុកមិនគ្រប់គ្រាន់')
+            alert('Out of stock')
+            Swal.fire("Item in out not enough! ");
             return;
         }
 
@@ -171,6 +178,9 @@ export default function CartPage() {
         const price = products.find(p => p._id === productId)?.price || 0;
         productsTotal += price;
     }
+
+    let listTotal = parseFloat(productsTotal) + parseFloat(shippingFee) + parseFloat(vatFee) 
+    let floatTotal = parseFloat(listTotal).toFixed(2)
 
     if (isSuccess) {
         return (
@@ -242,21 +252,26 @@ export default function CartPage() {
                                                     onClick={() => moreOfThisProduct(product._id)}>+</button>
                                             </td>
                                             <td className="text-gray-500">
-                                                ${cartProducts.filter(id => id === product._id).length * product.price}
+                                                ${product.price}
                                             </td>
                                         </tr>
                                     ))}
                                     <tr className="subtotal text-gray-500 text-sm">
-                                        <td colSpan={2}>Products</td>
+                                        <td colSpan={2}>Products Total</td>
                                         <td>${productsTotal}</td>
                                     </tr>
                                     <tr className="subtotal text-gray-500 text-sm">
-                                        <td colSpan={2}>Shipping</td>
+                                        <td colSpan={2}>Delivery Fee</td>
                                         <td>${shippingFee}</td>
                                     </tr>
+                                    <tr className="subtotal text-gray-500 text-sm">
+                                        <td colSpan={2}>VAT Fee</td>
+                                        <td>${vatFee}</td>
+                                    </tr>
+                                    
                                     <tr className="subtotal total text-2xl">
                                         <td colSpan={2}>Total</td>
-                                        <td>${productsTotal + parseInt(shippingFee || 0)}</td>
+                                        <td>${ floatTotal }</td>
                                     </tr>
                                     </tbody>
                                 </Table>

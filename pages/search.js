@@ -41,7 +41,7 @@ export default function SearchPage() {
         }
     }, [phrase]);
     function searchProducts(phrase) {
-        axios.get('/api/products?phrase='+encodeURIComponent(phrase))
+        axios.get('/api/products?phrase='+encodeURIComponent(phrase.toLowerCase()))
             .then(response => {
                 setProducts(response.data);
                 setIsLoading(false);
