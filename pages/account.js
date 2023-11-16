@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Center from "@/components/Center";
 import {signIn, signOut, useSession} from "next-auth/react";
-import Button from "@/components/Button";
 import styled from "styled-components";
 import WhiteBox from "@/components/WhiteBox";
 import {RevealWrapper} from "next-reveal";
@@ -24,10 +23,6 @@ const ColsWrapper = styled.div`
   }
 `;
 
-const CityHolder = styled.div`
-  display: flex;
-  gap: 5px;
-`;
 const WishedProductGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -103,7 +98,7 @@ export default function AccountPage() {
                 <ColsWrapper>
                     <div>
                         <RevealWrapper delay={0}>
-                            <WhiteBox>
+                            <WhiteBox className="shadow-md">
                                 <Tabs tabs={['Orders','Wishlist']} active={activeTab} onChange={setActiveTab}/>
                                 {activeTab === 'Orders' && (
                                     <>
@@ -157,59 +152,69 @@ export default function AccountPage() {
                     </div>
                     <div>
                         <RevealWrapper delay={100}>
-                            <WhiteBox>
-                                <h2>{session ? 'Account detail' : 'Login'}</h2>
+                            <WhiteBox className="shadow-md">
+                                <h2 className="font-bold text-gray-800 mb-1">{session ? 'Account Information' : 'Login Now'}</h2>
                                 {!addressLoaded && (
                                     <Spinner fullWidth={true}/>
                                 )}
                                 {addressLoaded && session && (
                                     <>
-                                        <Input type="text"
+                                        <Input className="mt-1" type="text"
                                                placeholder="Name"
                                                value={name}
                                                name="name"
                                                onChange={ev => setName(ev.target.value)}/>
-                                        <Input type="text"
-                                               placeholder="Email"
-                                               value={email}
-                                               name="email"
-                                               onChange={ev => setEmail(ev.target.value)}/>
-                                        <CityHolder>
-                                            <Input type="text"
-                                                   placeholder="City"
-                                                   value={city}
-                                                   name="city"
-                                                   onChange={ev => setCity(ev.target.value)}/>
-                                            <Input type="text"
-                                                   placeholder="Postal Code"
-                                                   value={postalCode}
-                                                   name="postalCode"
-                                                   onChange={ev => setPostalCode(ev.target.value)}/>
-                                        </CityHolder>
-                                        <Input type="text"
-                                               placeholder="Street Address"
-                                               value={streetAddress}
-                                               name="streetAddress"
-                                               onChange={ev => setStreetAddress(ev.target.value)}/>
-                                        <Input type="text"
-                                               placeholder="Province"
-                                               value={province}
-                                               name="province"
-                                               onChange={ev => setProvince(ev.target.value)}/>
-                                        <Input type="number"
+
+
+                                            <Input className="mt-1" type="number"
                                                placeholder="Phone Number"
                                                value={phoneNumber}
                                                name="phoneNumber"
                                                onChange={ev => setPhoneNumber(ev.target.value)}/>
-                                        <Button black block onClick={saveAddress}>Save</Button>
+
+
+                                        <Input className="mt-1" type="text"
+                                               placeholder="Email"
+                                               value={email}
+                                               name="email"
+                                               onChange={ev => setEmail(ev.target.value)}/>
+
+                                        
+                                            <Input className="mt-1" type="text"
+                                               placeholder="Street Address"
+                                               value={streetAddress}
+                                               name="streetAddress"
+                                               onChange={ev => setStreetAddress(ev.target.value)}/>
+
+                                        <Input className="mt-1" type="text"
+                                                   placeholder="City"
+                                                   value={city}
+                                                   name="city"
+                                                   onChange={ev => setCity(ev.target.value)}/>
+
+
+                                        <Input className="mt-1" type="text"
+                                               placeholder="Province"
+                                               value={province}
+                                               name="province"
+                                               onChange={ev => setProvince(ev.target.value)}/>
+
+
+                                        
+
+
+                                        <button className="mt-5 w-full text-white py-3 rounded-md bg-blue-600 hover:bg-blue-700 " block onClick={saveAddress}>Save</button>
                                         <hr/>
                                     </>
                                 )}
                                 {session && (
-                                    <Button primary onClick={logout}>Logout</Button>
+                                    <button className="mt-5 px-5 py-3 bg-gray-200 text-gray-700 hover:text-red-600 hover:bg-red-200 rounded-lg" onClick={logout}>Logout</button>
                                 )}
                                 {!session && (
-                                    <Button primary onClick={login}>Login With Google</Button>
+                                    <button onClick={login} className="flex items-center justify-center w-full mt-5 py-4 rounded-full border border-2 border-blue-500 hover:bg-blue-300 ">
+                                    <img class="h-5 mr-2" src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/motion-tailwind/img/logos/logo-google.png" alt=""/>
+                                    Sign in with Google
+                                  </button>
                                 )}
                             </WhiteBox>
                         </RevealWrapper>

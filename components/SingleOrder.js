@@ -13,9 +13,7 @@ const StyledOrder = styled.div`
 `;
 
 const ProductRow = styled.div`
-    span{
-      color: #aaa;
-    }
+    
 `;
 
 const Address = styled.div`
@@ -25,7 +23,8 @@ const Address = styled.div`
 `;
 export default function SingleOrder({line_items,createdAt, ...rest}) {
     return (
-        <StyledOrder>
+        <StyledOrder  className="text-gray-700">
+            
             <div>
                 <time>{(new Date(createdAt)).toLocaleString('sv-SE')}</time>
                 <Address>
@@ -36,14 +35,23 @@ export default function SingleOrder({line_items,createdAt, ...rest}) {
                 </Address>
             </div>
             <div>
+
+
+
                 {line_items.map(item => (
                     // eslint-disable-next-line react/jsx-key
-                    <ProductRow>
-                        <span>{item.quantity} X </span>
-                        {JSON.stringify(item.price_data.product_data.name)}
+                    <ProductRow className="text-md text-gray-500 font-semibold">
+                        <span>{item.quantity} x  {JSON.stringify(item.price_data.product_data.name)}</span>
+                        
+
+                        <span> = Price: {item.quantity * item.price_data.unit_amount / 100} $</span>
+
+
                     </ProductRow>
                 ))}
             </div>
+
+            
         </StyledOrder>
     );
 }

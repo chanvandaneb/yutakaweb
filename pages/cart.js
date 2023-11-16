@@ -146,6 +146,12 @@ export default function CartPage() {
             name,email,city,postalCode,streetAddress,province,phoneNumber,
             cartProducts,
         });
+
+        if (response.data === "Out of Stock"){
+            alert('ក្នុងស្ដុកមិនគ្រប់គ្រាន់')
+            return;
+        }
+
         if (response.data.url ) {
             window.location = response.data.url;
             clearCart();
@@ -192,7 +198,11 @@ export default function CartPage() {
                         <Box>
                             <h2>Cart</h2>
                             {!cartProducts?.length && (
-                                <div>Your cart is empty</div>
+                                <div>
+                                <h1 className="text-gray-400">Your cart is empty</h1>
+                                <img className="h-[400px] ml-20 opacity-30" src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-7359557-6024626.png"/>
+                                
+                                </div>
                             )}
                             {products?.length > 0 && (
                                 <Table>
