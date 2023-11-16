@@ -1,4 +1,4 @@
-import CategoriesPage from '@/components/CategoriesPage'
+import CategoriesPage from '@/pages/CategoriesPage'
 import React from 'react'
 
 export default function test() {

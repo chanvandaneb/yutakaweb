@@ -8,7 +8,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 import 'swiper/css/autoplay';
-import Center from './Center';
 
 function rand(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -39,6 +38,10 @@ export default function SliderImage() {
     autoplay={{ delay: 1000 }}
     pagination={{ clickable: true }}
   >
+    {createSlide()}
+    {createSlide()}
+    {createSlide()}
+    {createSlide()}
     {createSlide()}
     {createSlide()}
     {createSlide()}
