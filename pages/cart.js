@@ -36,6 +36,7 @@ const ColumnsWrapper = styled.div`
   }
 `;
 
+
 const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
@@ -45,6 +46,14 @@ const Box = styled.div`
 const ProductInfoCell = styled.td`
   padding: 10px 0;
   button{padding:0 !important;}
+`;
+
+const BigImage = styled.img`
+    margin: 0 auto;
+    height: 250px;
+    min-width: 250px;
+    object-fit: cover;
+    border-radius: 10px;
 `;
 
 const ProductImageBox = styled.div`
@@ -72,7 +81,10 @@ const ProductImageBox = styled.div`
 `;
 
 const QuantityLabel = styled.span`
+    font-size: 20px;
+  font-weight: 800;
   padding: 0 15px;
+  color: #696969;
   display: block;
   @media screen and (min-width: 768px) {
     display: inline-block;
@@ -80,10 +92,7 @@ const QuantityLabel = styled.span`
   }
 `;
 
-const CityHolder = styled.div`
-  display:flex;
-  gap: 5px;
-`;
+
 
 export default function CartPage() {
     const {cartProducts,addProduct,removeProduct,clearCart} = useContext(CartContext);
@@ -194,9 +203,9 @@ export default function CartPage() {
             <Header />
             <Center>
                 <ColumnsWrapper>
-                    <RevealWrapper delay={0}>
+                    <RevealWrapper delay={0} className="shadow-md">
                         <Box>
-                            <h2>Cart</h2>
+                            <h2 className="font-bold text-gray-800 mb-1">Cart</h2>
                             {!cartProducts?.length && (
                                 <div>
                                 <h1 className="text-gray-400">Your cart is empty</h1>
@@ -221,31 +230,32 @@ export default function CartPage() {
                                                 <ProductImageBox>
                                                     <img src={product.images[0]} alt=""/>
                                                 </ProductImageBox>
-                                                {product.title}
+                                                <br/>
+                                                <h1 className="font-bold text-gray-600">{product.title}</h1>
                                             </ProductInfoCell>
                                             <td>
-                                                <Button
-                                                    onClick={() => lessOfThisProduct(product._id)}>-</Button>
+                                                <button className="mr-2 px-4 py-2 font-black hover:border-red-400 border border-2 border-gray-300 text-gray-600 hover:text-red-400 rounded-full"
+                                                    onClick={() => lessOfThisProduct(product._id)}>-</button>
                                                 <QuantityLabel>
                                                     {cartProducts.filter(id => id === product._id).length}
                                                 </QuantityLabel>
-                                                <Button
-                                                    onClick={() => moreOfThisProduct(product._id)}>+</Button>
+                                                <button className="ml-2 px-4 py-2 font-black hover:border-blue-700 border border-2 border-gray-300 text-gray-600 hover:text-blue-700 rounded-full"
+                                                    onClick={() => moreOfThisProduct(product._id)}>+</button>
                                             </td>
-                                            <td>
+                                            <td className="text-gray-500">
                                                 ${cartProducts.filter(id => id === product._id).length * product.price}
                                             </td>
                                         </tr>
                                     ))}
-                                    <tr className="subtotal">
+                                    <tr className="subtotal text-gray-500 text-sm">
                                         <td colSpan={2}>Products</td>
                                         <td>${productsTotal}</td>
                                     </tr>
-                                    <tr className="subtotal">
+                                    <tr className="subtotal text-gray-500 text-sm">
                                         <td colSpan={2}>Shipping</td>
                                         <td>${shippingFee}</td>
                                     </tr>
-                                    <tr className="subtotal total">
+                                    <tr className="subtotal total text-2xl">
                                         <td colSpan={2}>Total</td>
                                         <td>${productsTotal + parseInt(shippingFee || 0)}</td>
                                     </tr>
@@ -255,50 +265,54 @@ export default function CartPage() {
                         </Box>
                     </RevealWrapper>
                     {!!cartProducts?.length && (
-                        <RevealWrapper delay={100}>
-                            <Box>
-                                <h2>Order information</h2>
-                                <Input type="text"
-                                       placeholder="Name"
-                                       value={name}
-                                       name="name"
-                                       onChange={ev => setName(ev.target.value)} />
-                                <Input type="text"
-                                       placeholder="Email"
-                                       value={email}
-                                       name="email"
-                                       onChange={ev => setEmail(ev.target.value)}/>
-                                <CityHolder>
-                                    <Input type="text"
-                                           placeholder="City"
-                                           value={city}
-                                           name="city"
-                                           onChange={ev => setCity(ev.target.value)}/>
-                                    <Input type="text"
-                                           placeholder="Postal Code"
-                                           value={postalCode}
-                                           name="postalCode"
-                                           onChange={ev => setPostalCode(ev.target.value)}/>
-                                </CityHolder>
-                                <Input type="text"
-                                       placeholder="Street Address"
-                                       value={streetAddress}
-                                       name="streetAddress"
-                                       onChange={ev => setStreetAddress(ev.target.value)}/>
-                                <Input type="text"
-                                       placeholder="Province"
-                                       value={province}
-                                       name="province"
-                                       onChange={ev => setProvince(ev.target.value)}/>
-                                <Input type="number"
-                                       placeholder="Phone Number"
-                                       value={phoneNumber}
-                                       name="phone Number"
-                                       onChange={ev => setPhoneNumber(ev.target.value)}/>
-                                <Button black block
+                        <RevealWrapper delay={100} className="shadow-md">
+                            <Box >
+                                <h1 className="font-bold text-gray-800 mb-1">Order information</h1>
+                                <Input className="mt-1" type="text"
+                                placeholder="Name"
+                                value={name}
+                                name="name"
+                                onChange={ev => setName(ev.target.value)}/>
+
+
+                             <Input className="mt-1" type="number"
+                                placeholder="Phone Number"
+                                value={phoneNumber}
+                                name="phoneNumber"
+                                onChange={ev => setPhoneNumber(ev.target.value)}/>
+
+
+                         <Input className="mt-1" type="text"
+                                placeholder="Email"
+                                value={email}
+                                name="email"
+                                onChange={ev => setEmail(ev.target.value)}/>
+
+                         
+                             <Input className="mt-1" type="text"
+                                placeholder="Street Address"
+                                value={streetAddress}
+                                name="streetAddress"
+                                onChange={ev => setStreetAddress(ev.target.value)}/>
+
+                         <Input className="mt-1" type="text"
+                                    placeholder="City"
+                                    value={city}
+                                    name="city"
+                                    onChange={ev => setCity(ev.target.value)}/>
+
+
+                         <Input className="mt-1" type="text"
+                                placeholder="Province"
+                                value={province}
+                                name="province"
+                                onChange={ev => setProvince(ev.target.value)}/>
+
+
+                                <button className="mt-5 w-full text-white py-3 rounded-md bg-blue-600 hover:bg-blue-700" block
                                         onClick={goToPayment}>
                                     Continue to payment
-                                </Button>
+                                </button>
                             </Box>
                         </RevealWrapper>
                     )}
