@@ -33,7 +33,7 @@ export default function SliderImage() {
 
     // install Swiper modules
     modules={[Navigation, Pagination, Autoplay]}
-    slidesPerView={1}
+    slidesPerView={2}
     navigation
     autoplay={{ delay: 1000 }}
     pagination={{ clickable: true }}

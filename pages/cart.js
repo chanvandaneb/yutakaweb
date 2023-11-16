@@ -137,9 +137,8 @@ export default function CartPage() {
         axios.get('/api/address').then(response => {
             setName(response.data.name);
             setEmail(response.data.email);
-            setCity(response.data.city);
-            setPostalCode(response.data.postalCode);
             setStreetAddress(response.data.streetAddress);
+            setCity(response.data.city);
             setProvince(response.data.province);
             setPhoneNumber(response.data.phoneNumber);
         });
@@ -152,7 +151,7 @@ export default function CartPage() {
     }
     async function goToPayment() {
         const response = await axios.post('/api/checkout', {
-            name,email,city,postalCode,streetAddress,province,phoneNumber,
+            name,email,streetAddress,city,province,phoneNumber,
             cartProducts,
         });
 
@@ -189,7 +188,7 @@ export default function CartPage() {
                         </div>
                       </div>
                     </div>
-                    <h3 class="my-4 text-center text-3xl font-semibold text-gray-700">Congratuation!!!</h3>
+                    <h3 class="my-4 text-center text-3xl font-semibold text-gray-700">Success Order!</h3>
                     <p class="w-[230px] text-center font-normal text-gray-600">Your order have been success and is being prepare for you</p>
                     <a href={'/account'} class="mx-auto mt-10 block rounded-xl border-4 border-transparent bg-blue-500 px-6 py-3 text-center text-base font-medium text-blue-100 outline-8 hover:outline hover:duration-300">Check Your Order</a>
                   </div>
