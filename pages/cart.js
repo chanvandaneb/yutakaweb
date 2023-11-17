@@ -162,8 +162,7 @@ export default function CartPage() {
         });
 
         if (response.data === "Out of Stock"){
-            alert('Out of stock')
-            Swal.fire("Item in out not enough! ");
+            Swal.fire("Stock not enough");
             return;
         }
 

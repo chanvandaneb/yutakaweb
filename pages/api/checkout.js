@@ -13,7 +13,8 @@ export default async function handler(req,res) {
         return;
     }
     const {
-        name,email,streetAddress,city,province,phoneNumber,
+        name,email,city,
+        postalCode,streetAddress,province,phoneNumber,
         cartProducts,
     } = req.body;
     await mongooseConnect();
@@ -28,9 +29,15 @@ export default async function handler(req,res) {
         const quantity = productsIds.filter(id => id === productId)?.length || 0;
         if (quantity > 0 && productInfo) {
             if (productInfo.stock > 0){
-                await Product.findByIdAndUpdate(productId,{
-                    stock: productInfo.stock - quantity
-                })
+                if (quantity > productInfo.stock){
+                    res.json('Out of Stock')
+                    return;
+                }
+                else{
+                    await Product.findByIdAndUpdate(productId,{
+                        stock: productInfo.stock - quantity
+                    })
+                }
             }
             line_items.push({
                 quantity,
@@ -45,7 +52,7 @@ export default async function handler(req,res) {
     const session = await getServerSession(req,res,authOptions);
 
     const orderDoc = await Order.create({
-        line_items,name,email,streetAddress,city,province,phoneNumber,paid:true,
+        line_items,name,email,city,postalCode,streetAddress,province,phoneNumber,paid:true,
         userEmail: session?.user?.email,
     });
 

@@ -35,17 +35,22 @@ export default function SliderImage() {
     modules={[Navigation, Pagination, Autoplay]}
     slidesPerView={2}
     navigation
-    autoplay={{ delay: 1000 }}
+    autoplay={{ delay: 2000 }}
     pagination={{ clickable: true }}
   >
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
-    {createSlide()}
+
+    <SwiperSlide>
+    <img className="w-full" src="https://i.ibb.co/YyzNTbK/image2.png" alt="" />
+    </SwiperSlide>
+    <SwiperSlide>
+    <img className="w-full" src="https://i.ibb.co/zJjL6X6/image1.jpg" alt="" />
+    </SwiperSlide>
+    <SwiperSlide>
+    <img className="w-full" src="https://i.ibb.co/sRJYLG9/image5.png" alt="" />
+    </SwiperSlide>
+    <SwiperSlide>
+    <img className="w-full" src="https://i.ibb.co/GsKnpNf/image3.png" alt="" />
+    </SwiperSlide>
   </Swiper>
   )
 }
