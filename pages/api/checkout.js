@@ -13,7 +13,8 @@ export default async function handler(req,res) {
         return;
     }
     const {
-        name,email,streetAddress,city,province,phoneNumber,
+        name,email,city,
+        postalCode,streetAddress,province,phoneNumber,
         cartProducts,
     } = req.body;
     await mongooseConnect();
@@ -51,15 +52,12 @@ export default async function handler(req,res) {
     const session = await getServerSession(req,res,authOptions);
 
     const orderDoc = await Order.create({
-        line_items,name,email,streetAddress,city,province,phoneNumber,paid:true,
+        line_items,name,email,city,postalCode,streetAddress,province,phoneNumber,paid:true,
         userEmail: session?.user?.email,
     });
 
     const shippingFeeSetting = await Setting.findOne({name:'shippingFee'});
     const shippingFeeCents = parseInt(shippingFeeSetting.value || '0') * 100;
-
-    const vatFeeSetting = await Setting.findOne({name:'vatFee'});
-    const vatFeeCents = parseInt(vatFeeSetting.value || '0') * 100;
 
     const stripeSession = await stripe.checkout.sessions.create({
         line_items,
@@ -75,15 +73,6 @@ export default async function handler(req,res) {
                     display_name: 'shipping fee',
                     type: 'fixed_amount',
                     fixed_amount: {amount: shippingFeeCents, currency: 'USD'},
-                },
-            }
-        ],
-        vat_options: [
-            {
-                vat_rate_data: {
-                    display_name: 'vat fee',
-                    type: 'fixed_amount',
-                    fixed_amount: {amount: vatFeeCents, currency: 'USD'},
                 },
             }
         ],
