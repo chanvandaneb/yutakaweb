@@ -16,6 +16,10 @@ const Image = styled.img`
   width: 200px;
   object-fit: cover;
   border-radius: 10px;
+  @media (max-width: 768px) {
+    height: 50px;
+    width: 50px;
+  }
 `;
 
 export default function CategoriesPage() {
@@ -43,7 +47,7 @@ export default function CategoriesPage() {
             {images.map((image, i) => (
               // eslint-disable-next-line react/jsx-key
               <Link href={"/category/" + image._id}>
-                <li className="m-2 p-2 border hover:border-1 hover:border-blue-500 bg-white rounded-xl  flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
+                <li className=" m-2 p-2 border hover:border-1 hover:border-blue-500 bg-white rounded-xl  flex flex-col items-center justify-center text-center duration-300 hover:bg-white shadow-sm hover:shadow-2xl">
                   <Image src={image.images} alt="" />
                   <span class="font-semibold my-3 text-gray-600 ">
                     {image.name}
