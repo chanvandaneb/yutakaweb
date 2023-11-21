@@ -50,7 +50,7 @@ export default function Header() {
               <Wrapper className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
                     <Logo href={'/'} className="flex items-center">
                       <img src="https://i.ibb.co/kyGZHpk/logo.jpg" class="mr-3 h-6 sm:h-14" alt="Flowbite Logo" />
-                      <span class="self-center text-xl font-semibold whitespace-nowrap">Yutaka</span>
+                      <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Yutaka</span>
                     </Logo>
                   <StyledDiv class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                     <ul className="flex flex-col  mt-4 font-semibold text-gray-600 lg:flex-row lg:space-x-8 lg:mt-0">
